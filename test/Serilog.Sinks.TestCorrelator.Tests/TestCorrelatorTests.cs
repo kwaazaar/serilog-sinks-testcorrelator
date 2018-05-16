@@ -61,6 +61,24 @@ namespace Serilog.Sinks.TestCorrelator.Tests
         }
 
         [TestMethod]
+        public void All_LogEvents_Can_Be_Captured()
+        {
+            Guid contextGuid;
+
+            Log.Information("1");
+
+            using (var context = TestCorrelator.CreateContext())
+            {
+                contextGuid = context.Guid;
+                Log.Information("2");
+            }
+
+            Log.Information("3");
+
+            Assert.IsTrue(TestCorrelator.GetLogEventsFromAnyContext().Count() >= 3);
+        }
+
+        [TestMethod]
         public void A_context_captures_LogEvents_inside_the_same_logical_call_context()
         {
             using (TestCorrelator.CreateContext())

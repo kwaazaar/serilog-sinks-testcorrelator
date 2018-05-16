@@ -41,6 +41,16 @@ namespace Serilog.Sinks.TestCorrelator
         }
 
         /// <summary>
+        /// Gets all the LogEvents emitted to a <seealso cref="TestCorrelatorSink"/>.
+        /// </summary>
+        /// <returns>LogEvents emitted to any context.</returns>
+        public static IEnumerable<LogEvent> GetLogEventsFromAnyContext()
+        {
+           return ContextGuidDecoratedLogEvents
+                .Select(contextGuidDecoratedLogEvent => contextGuidDecoratedLogEvent.LogEvent);
+        }
+
+        /// <summary>
         /// Gets the LogEvents emitted within the current <seealso cref="ITestCorrelatorContext"/>.
         /// </summary>
         /// <returns>LogEvents emitted within the current <seealso cref="ITestCorrelatorContext"/>.</returns>
